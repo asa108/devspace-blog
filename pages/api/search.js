@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 
-export default (req, res) => {
+export default function handler(req, res) {
   let posts;
 
   if (process.env.NODE_ENV === "production") {
