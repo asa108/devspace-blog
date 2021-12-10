@@ -16,8 +16,8 @@ function postData() {
     const { data: frontmatter } = matter(markdownWithMeta);
 
     return {
-      frontmatter,
       slug,
+      frontmatter,
     };
   });
 
