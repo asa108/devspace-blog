@@ -1,8 +1,9 @@
+import React from "react";
 import { useState, useEffect } from "react";
 import { FaSearch } from "react-icons/fa";
 import SearchResults from "./SearchResults";
 
-export default function Search() {
+const Search = React.forwardRef((props, ref) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
@@ -20,10 +21,16 @@ export default function Search() {
     getResults();
   }, [searchTerm]);
 
+  const handleChange = (e) => {
+    setSearchTerm(e.target.value);
+    props.setIsMenuOpen(true);
+    console.log("props.isMenuOpen", props.isMenuOpen);
+  };
+
   return (
     <div className="relative bg-gray-600 p-4">
       <div className="container mx-auto flex items-center justify-center md:justify-end">
-        <div className="relative text-gray-600 w-72">
+        <div className="relative text-gray-600 w-72" ref={ref}>
           <form>
             <input
               type="search"
@@ -31,7 +38,7 @@ export default function Search() {
               id="search"
               className="bg-white h-10 px-5 pr-10 rounded-full text-sm focus:outline-none w-72"
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={(e) => handleChange(e)}
               placeholder="Search Posts..."
             />
 
@@ -39,8 +46,9 @@ export default function Search() {
           </form>
         </div>
       </div>
-
-      <SearchResults results={searchResults} />
+      {props.isMenuOpen && <SearchResults ref={ref} results={searchResults} />}
     </div>
   );
-}
+});
+Search.displayName = "Search";
+export default Search;
