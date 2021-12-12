@@ -6,15 +6,11 @@ import Search from "./Search";
 export default function Layout({ title, keywords, children, description }) {
   const ref = useRef();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  console.log(isMenuOpen);
 
   useEffect(() => {
-    console.log("useEffect");
     const checkIfClickedOutside = (e) => {
       if (isMenuOpen && ref.current && !ref.current.contains(e.target)) {
         setIsMenuOpen(false);
-        console.log("関数の中身は呼ばれてるcheckIfClickedOutside");
-        console.log("checkf isMenuOpen", isMenuOpen);
       }
     };
     if (isMenuOpen) {
@@ -24,22 +20,6 @@ export default function Layout({ title, keywords, children, description }) {
       };
     }
   }, [isMenuOpen]);
-
-  // useEffect(() => {
-  //   const checkIfClickedOutside = (e) => {
-  //     if (isMenuOpen && ref.current && !ref.current.contains(e.target)) {
-  //       setIsMenuOpen(false);
-  //       console.log("関数の中身は呼ばれてるcheckIfClickedOutside");
-  //       console.log("checkf isMenuOpen", isMenuOpen);
-  //     }
-  //   };
-  //   if (isMenuOpen) {
-  //     document.addEventListener("mousedown", checkIfClickedOutside);
-  //     return () => {
-  //       document.removeEventListener("mousedown", checkIfClickedOutside);
-  //     };
-  //   }
-  // }, [isMenuOpen]);
 
   return (
     <div>
@@ -51,12 +31,6 @@ export default function Layout({ title, keywords, children, description }) {
       </Head>
       <Header />
       <Search isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} ref={ref} />
-
-      {/*
-    <button onClick={() => setIsMenuOpen(true)}>Click</button>
-      {isMenuOpen && <Search ref={ref} />}
-    */}
-
       <main className="container mx-auto my-7">{children}</main>
     </div>
   );
